@@ -5,7 +5,6 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <FunctionsEnablePlaceholder>True</FunctionsEnablePlaceholder>
     <FunctionsEnableWorkerIndexing>True</FunctionsEnableWorkerIndexing>
     <FunctionsEnableExecutorSourceGen>True</FunctionsEnableExecutorSourceGen>
     <PublishReadyToRun>true</PublishReadyToRun>
