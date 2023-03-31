@@ -1,6 +1,11 @@
 # FunctionApp44
 Test app for dotnet isolated placeholder/specialization usecases with our new native component.
 
+ * net6.0 function app.
+ * ReadyToRun publishing enabled.
+ * Worker indexing enabled (in Program.cs - `ConfigureGeneratedFunctionMetadataProvider` method call)
+ * Generated function executor enabled (in Program.cs - `ConfigureGeneratedFunctionExecutor` method call)
+
 ### To build/publish locally.
 
 _
