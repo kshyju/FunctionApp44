@@ -22,7 +22,7 @@ namespace FunctionApp44
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions44 Net6.0 R2R");
+            response.WriteString("Welcome to Azure Functions44 Net8.0 R2R");
 
             return response;
         }
