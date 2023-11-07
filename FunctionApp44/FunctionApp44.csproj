@@ -5,16 +5,13 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <FunctionsEnableWorkerIndexing>True</FunctionsEnableWorkerIndexing>
-    <FunctionsAutoRegisterGeneratedMetadataProvider>True</FunctionsAutoRegisterGeneratedMetadataProvider>
-    <FunctionsEnableExecutorSourceGen>True</FunctionsEnableExecutorSourceGen>
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.15.1" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
