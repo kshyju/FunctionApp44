@@ -1,0 +1,60 @@
+trigger:
+  branches:
+    include:
+      - master
+      - publish/*
+  paths:
+    include:
+      - FunctionApp44
+stages:
+  - stage: DotNetPublish
+    displayName: "Publish(WinX64+LinuxX64)"
+    jobs:
+      - job: PublishWindowsNET8
+        displayName: "Publish Win-X64 NET8"
+        pool:
+          vmImage: "windows-latest"
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              version: "8.x"
+              includePreviewVersions: true
+
+          - task: DotNetCoreCLI@2
+            displayName: "Dotnet Publish"
+            inputs:
+              command: "publish"
+              publishWebProjects: false
+              zipAfterPublish: false
+              arguments: "-c Release -r win-x64 -o $(Build.ArtifactStagingDirectory)/publish/win-x64/FunctionApp44 --no-self-contained"
+              workingDirectory: $(Build.SourcesDirectory)/FunctionApp44
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/publish/win-x64/FunctionApp44"
+              artifact: "FunctionApp44-zip"
+      
+      - job: PublishLinuxNET8
+        displayName: "Publish LinuxX64 NET8"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              version: "8.x"
+              includePreviewVersions: true
+
+          - task: DotNetCoreCLI@2
+            displayName: "Dotnet Publish"
+            inputs:
+              command: "publish"
+              publishWebProjects: false
+              zipAfterPublish: false
+              arguments: "-c Release -r linux-x64 -o $(Build.ArtifactStagingDirectory)/publish/linux-x64/FunctionApp44 --no-self-contained"
+              workingDirectory: $(Build.SourcesDirectory)/FunctionApp44
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/publish/linux-x64/FunctionApp44"
+              artifact: "FunctionApp44-sb"
+
