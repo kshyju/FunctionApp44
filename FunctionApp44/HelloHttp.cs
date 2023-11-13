@@ -3,18 +3,18 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace FunctionApp44
+namespace Company.Function
 {
-    public class Function1
+    public class HelloHttp
     {
         private readonly ILogger _logger;
 
-        public Function1(ILoggerFactory loggerFactory)
+        public HelloHttp(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<Function1>();
+            _logger = loggerFactory.CreateLogger<HelloHttp>();
         }
 
-        [Function("Function1")]
+        [Function("HelloHttp")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -22,7 +22,7 @@ namespace FunctionApp44
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions44 Net6.0 R2R");
+            response.WriteString("Welcome to Azure Functions!");
 
             return response;
         }

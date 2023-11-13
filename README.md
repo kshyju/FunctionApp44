@@ -1,7 +1,12 @@
 # FunctionApp44
 
-Minimal isolated function app for validating cold start experiments. 
+Minimal dotnet isolated function app with one http trigger (`/api/hellohttp`)
 
-[Numbers from various environments](https://gist.github.com/kshyju/5e50e5376333e756b8d8864befe5ab1d)
+ - Anonymous auth
 
 
+### Publish
+
+```bash
+dotnet publish -c release -r win-x64 --no-self-contained
+```
