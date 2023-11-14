@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - publish/*
+      - 'publish/*'
 
 jobs:
   build:
@@ -17,7 +17,15 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.*'
+        dotnet-version: '7.*'
+
+    - name: Get branch name
+      id: get_branch
+      run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
+    - name: Get commit hash
+      id: get_commit
+      run: echo "::set-output name=commit::${GITHUB_SHA::8}"
 
     - name: Publish for Win-x64
       run: dotnet publish -c release -r win-x64 -o ./out/win-x64 --no-self-contained
@@ -25,7 +33,7 @@ jobs:
     - name: Upload artifact for Win-x64
       uses: actions/upload-artifact@v2
       with:
-        name: published-artifacts-win-x64
+        name: published-artifacts-win-x64-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}-${{ github.run_number }}
         path: ./out/win-x64
 
   build-linux:
@@ -38,7 +46,15 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '8.*'
+        dotnet-version: '7.*'
+
+    - name: Get branch name
+      id: get_branch
+      run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
+    - name: Get commit hash
+      id: get_commit
+      run: echo "::set-output name=commit::${GITHUB_SHA::8}"
 
     - name: Publish for Linux-x64
       run: dotnet publish -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
@@ -46,5 +62,5 @@ jobs:
     - name: Upload artifact for Linux-x64
       uses: actions/upload-artifact@v2
       with:
-        name: published-artifacts-linux-x64
+        name: published-artifacts-linux-x64-${{ steps.get_branch.outputs.branch }}-${{ steps.get_commit.outputs.commit }}-${{ github.run_number }}
         path: ./out/linux-x64
