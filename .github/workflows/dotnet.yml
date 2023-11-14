@@ -1,0 +1,50 @@
+name: Publish and Package
+
+on:
+  push:
+    branches:
+      - master
+      - publish/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.*'
+
+    - name: Publish for Win-x64
+      run: dotnet publish -c release -r win-x64 -o ./out/win-x64 --no-self-contained
+
+    - name: Upload artifact for Win-x64
+      uses: actions/upload-artifact@v2
+      with:
+        name: published-artifacts-win-x64
+        path: ./out/win-x64
+
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.*'
+
+    - name: Publish for Linux-x64
+      run: dotnet publish -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
+
+    - name: Upload artifact for Linux-x64
+      uses: actions/upload-artifact@v2
+      with:
+        name: published-artifacts-linux-x64
+        path: ./out/linux-x64
