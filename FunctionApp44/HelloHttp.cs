@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -15,15 +16,24 @@ namespace Company.Function
         }
 
         [Function("HelloHttp")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            var pid = Environment.ProcessId;
+            var processPath = Environment.ProcessPath;
+            _logger.LogInformation($"C# HTTP trigger function processed a request.pid:{pid},processPath:{processPath}");
+
+            var envVariables = Environment.GetEnvironmentVariables();
+
+            var ob = new
+            {
+                envVariables.Count,
+                ProcessId = pid,
+                ProcessPath = processPath,
+                EnvironmentVariabes = envVariables
+            };
 
             var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-
-            response.WriteString("Welcome to Azure Functions!");
-
+            await response.WriteAsJsonAsync(ob);
             return response;
         }
     }
