@@ -31,37 +31,3 @@ jobs:
       with:
         name: published-artifacts-win-x64-${{ steps.get_commit_windows.outputs.commit }}-${{ github.run_number }}
         path: ./out/win-x64
-
-    - name: Publish for Win-x64 SelfContained
-      run: dotnet publish -c release -r win-x64 -o ./out/win-x64-sc --self-contained
-
-    - name: Upload artifact for Win-x64 SelfContained
-      uses: actions/upload-artifact@v2
-      with:
-        name: published-artifacts-win-x64-sc-${{ steps.get_commit_windows.outputs.commit }}-${{ github.run_number }}
-        path: ./out/win-x64-sc
-
-  build-linux:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: '8.*'
-
-    - name: Get commit hash
-      id: get_commit
-      run: echo "::set-output name=commit::${GITHUB_SHA::8}"
-
-    - name: Publish for Linux-x64
-      run: dotnet publish -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
-
-    - name: Upload artifact for Linux-x64
-      uses: actions/upload-artifact@v2
-      with:
-        name: published-artifacts-linux-x64-${{ steps.get_commit.outputs.commit }}-${{ github.run_number }}
-        path: ./out/linux-x64
