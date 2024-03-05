@@ -20,31 +20,22 @@ jobs:
         dotnet-version: '8.*'
 
     - name: Publish for Win-x64
-      run: dotnet publish -c release -r win-x64 -o ./out/win-x64 --no-self-contained
+      run: dotnet publish -c release -r win-x64 -f net7.0 -o ./out/win-x64 --no-self-contained
 
     - name: Upload artifact for Win-x64 
       uses: actions/upload-artifact@v2
       with:
-        name: published-artifacts-win-x64-${{ github.run_number }}
+        name: published-artifacts-net7-win-x64-${{ github.run_number }}
         path: ./out/win-x64
 
     - name: Publish Portable
-      run: dotnet publish -c release -o ./out/portable --no-self-contained
+      run: dotnet publish -c release -f net7.0 -o ./out/portable --no-self-contained
 
     - name: Upload artifact for Win-x64 SelfContained
       uses: actions/upload-artifact@v2
       with:
-        name: published-artifacts-portable-${{ github.run_number }}
+        name: published-artifacts-net7-portable-${{ github.run_number }}
         path: ./out/portable
-
-    - name: Publish for Win-x64 SelfContained
-      run: dotnet publish -c release -r win-x64 -o ./out/win-x64-sc --self-contained
-
-    - name: Upload artifact for Win-x64 SelfContained
-      uses: actions/upload-artifact@v2
-      with:
-        name: published-artifacts-win-x64-sc-${{ github.run_number }}
-        path: ./out/win-x64-sc
 
   build-linux:
     runs-on: ubuntu-latest
@@ -59,10 +50,10 @@ jobs:
         dotnet-version: '8.*'
 
     - name: Publish for Linux-x64
-      run: dotnet publish -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
+      run: dotnet publish -c release -r linux-x64 -f net7.0 -o ./out/linux-x64 --no-self-contained
 
     - name: Upload artifact for Linux-x64
       uses: actions/upload-artifact@v2
       with:
-        name: published-artifacts-linux-x64-${{ github.run_number }}
+        name: published-artifacts-net7-linux-x64-${{ github.run_number }}
         path: ./out/linux-x64
