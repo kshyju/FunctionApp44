@@ -20,7 +20,10 @@ jobs:
         dotnet-version: '8.*'
 
     - name: Publish for Linux-x64
-      run: dotnet publish "**\**\FunctionApp44.csproj" -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
+      run: |
+        cd FunctionApp44
+        dotnet restore
+        dotnet publish -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained -p:UseAppHost=false
 
     - name: Upload artifact for Linux-x64
       uses: actions/upload-artifact@v2
