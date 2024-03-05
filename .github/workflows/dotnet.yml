@@ -7,36 +7,6 @@ on:
       - 'publish/**'
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: '8.*'
-
-    - name: Publish for Win-x64
-      run: dotnet publish -c release -r win-x64 -f net7.0 -o ./out/win-x64 --no-self-contained
-
-    - name: Upload artifact for Win-x64 
-      uses: actions/upload-artifact@v2
-      with:
-        name: published-artifacts-net7-win-x64-${{ github.run_number }}
-        path: ./out/win-x64
-
-    - name: Publish Portable
-      run: dotnet publish "../FunctionApp44/FunctionApp44.csproj" -c release -f net7.0 -o ./out/portable --no-self-contained
-
-    - name: Upload artifact for Win-x64 SelfContained
-      uses: actions/upload-artifact@v2
-      with:
-        name: published-artifacts-net7-portable-${{ github.run_number }}
-        path: ./out/portable
-
   build-linux:
     runs-on: ubuntu-latest
     
@@ -50,7 +20,7 @@ jobs:
         dotnet-version: '8.*'
 
     - name: Publish for Linux-x64
-      run: dotnet publish "..\FunctionApp44\FunctionApp44.csproj" -c release -r linux-x64 -f net7.0 -o ./out/linux-x64 --no-self-contained
+      run: dotnet publish "**\**\FunctionApp44.csproj" -c release -r linux-x64 -o ./out/linux-x64 --no-self-contained
 
     - name: Upload artifact for Linux-x64
       uses: actions/upload-artifact@v2
